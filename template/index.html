@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        text-decoration: none;
+        list-style: none;
+
+    }
+
+    box {
+
+        height: 100vh;
+        width: 100%;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+    }
+
+    nav {
+        height: 10vh;
+        width: 100%;
+        background: rgb(52, 183, 213);
+    }
+
+    label.logo {
+        font-size: 35px;
+        font-weight: bold;
+        color: white;
+        padding: 0 100px;
+        line-height: 80px;
+    }
+
+    nav ul {
+        float: right;
+        margin-right: 40px;
+    }
+
+    nav li {
+        display: inline-block;
+        margin: 0 8px;
+        line-height: 80px;
+    }
+
+    nav a {
+        color: white;
+        font-size: 18px;
+        text-transform: uppercase;
+        border: 1px solid transparent;
+        padding: 7px 10px;
+        border-radius: 3px;
+    }
+
+    a.active,
+    a:hover {
+        border: 1px solid white;
+        transition: 0.5s;
+    }
+
+    .main {
+
+        height: 90vh;
+        width: 100%;
+        display: flex;
+
+
+    }
+
+    .container {
+        width: 50%;
+        height: 100%;
+        padding-left: 2%;
+        padding-top: 10%;
+
+    }
+
+    .container2 {
+        width: 50%;
+        height: 100%;
+        padding-left: 2%;
+        padding-top: 5%;
+    }
+
+    .searchbar {
+        font-size: larger;
+        height: 12%;
+        width: 80%;
+        border-radius: 2px;
+        border: 1px solid rgb(0, 0, 0);
+    }
+
+    .button {
+        height: 3rem;
+        margin-left: 30px;
+    }
+
+    .button:hover {
+        cursor: pointer;
+    }
+    .mrq {
+        color: red;
+        font-size: larger;
+    }
+
+
+</style>
+
+<body>
+    <div class="box">
+        <nav>
+            <label class="logo">GlobalWeather</label>
+            <ul>
+                <li><a class="active" href="#">Home</a></li>
+            </ul>
+        </nav>
+        <marquee class="mrq" width="100%" direction="left" height="40%" color>
+            Please enter the name of your place without spaces and ensure that the spelling is correct. 
+            </marquee>            
+        <div class="main">
+            
+
+            <div class="container">
+                <form method="post">
+                    {% csrf_token %}
+                    <h1>Search with your place name</h1><br>
+                    <input type="text" maxlength="12" class="searchbar" name="city" placeholder="Place Name...">
+                    <button type="submit" style=" border-radius: 2px;
+                        border: 1px solid rgb(0, 0, 0);background-color:white;">Search</button>
+                        <img src="https://images-na.ssl-images-amazon.com/images/I/41gYkruZM2L.png" alt="search icon"
+                        class="button">
+                </form>
+            </div>
+            <div class="container2"> 
+  
+                {% if coordinate and temp and pressure and humidity %}
+                <center>
+                    <h1 style="color: rgb(255, 0, 0);">{{city_name}}</h1><br>
+                    <h2 style="color: rgb(52, 183, 213);">Coordinates [X,Y]</h2>
+                    <h2>[{{coordinate}}]</h2><br>
+                    <h2 style="color: rgb(52, 183, 213);">Temperature in Celsius</h2>
+                    <h2>{{temp}}</h2><br>
+                    <h2 style="color: rgb(52, 183, 213);">Pressure</h2>
+                    <h2>{{pressure}} </h2><br>
+                    <h2 style="color: rgb(52, 183, 213);">Humidity</h2>
+                    <h2>{{humidity}}</h2><br>
+                    <h2 style="color: rgb(52, 183, 213);">Description</h2>
+                    <h2>{{description}}</h2><br>
+                    <h2 style="color: rgb(52, 183, 213);">Forecast</h2>
+                    <h2>{{main}}</h2>
+                    <img src="http://openweathermap.org/img/w/{{icon}}.png" alt="Image" style="width:70px">
+                </center>
+
+                {% else %}
+                <center>
+                    {% if msg %}
+                    <h3 style="color:red">{{ msg }}<h3>
+                {% endif %}
+                    
+                </center>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>
